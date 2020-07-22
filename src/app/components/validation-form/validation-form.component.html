@@ -1,0 +1,60 @@
+<div class="form-container">
+    <div class="form-header">
+        <br>
+        <h3>Apply for personal loan here</h3>
+    </div>
+    <br>
+    <hr>
+    <div class="form-body">
+
+        <h2 *ngIf='OTPVerifySucess' class="mat-display-1" style="text-align: center;">Thank you for verification {{fullname.value}}</h2>
+        <form [formGroup]='myForm' *ngIf='!OTPVerifySucess'>
+            <mat-form-field appearance="fill" class="full-width-field">
+                <mat-label>City</mat-label>
+                <input matInput placeholder="Enter Your City Name" formControlName="city" >
+                <mat-error *ngIf="city.invalid && city.touched">City Name is Required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width-field">
+                <mat-label>PAN Number</mat-label>
+                <input matInput placeholder="Enter Your PAN Number" formControlName="PAN" maxlength="10">
+                <mat-error *ngIf="PAN.invalid && PAN.touched">Invalid PAN Number</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width-field">
+                <mat-label>Full Name</mat-label>
+                <input matInput placeholder="Enter Your Full Name" formControlName="fullname">
+                <mat-error *ngIf="fullname.invalid  && fullname.touched">Name is required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width-field">
+                <mat-label>E-mail</mat-label>
+                <input matInput placeholder="Enter Your E-Mail" formControlName="email">
+                <mat-error *ngIf="email.invalid">E-mail is required and need to be in valid format</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="full-width-field">
+                <mat-label>Mobile Number</mat-label>
+                <span matPrefix style="margin-right: 12px;">+91</span>
+                <input matInput placeholder="Enter Your Mobile Number" formControlName="mobile" (keyup)='getOTP()'>
+                <mat-error *ngIf="mobile.invalid">Mobile Number is required of 10 digits</mat-error>
+            </mat-form-field>
+
+            <p *ngIf='otpSendStatus === 2'> Sending OTP....</p>
+            <p *ngIf='otpSendStatus === 1'> OTP Sent. </p>
+            <p *ngIf='otpSendStatus === 0'> Please check above info is correct or there is error on server end. </p>
+
+            <mat-form-field appearance="fill" [hidden]="otpSendStatus !== 1" class="full-width-field">
+                <mat-label>OTP</mat-label>
+                <input matInput placeholder="Enter OTP" formControlName="OTP" (keyup)='verifyOTP()' >
+                <mat-error *ngIf="OTP.invalid">OTP should be 4 digite only</mat-error>
+            </mat-form-field>
+
+            <span *ngIf='waitingTimer != 180'>Wait for {{waitingTimer}} seconds</span>
+            <span *ngIf='retryAttempt >= 3'>Please try again after an hour.</span>
+            <p *ngIf='networkError'> Network Error </p>
+            <button mat-button color="primary" [hidden]="otpSendStatus !== 1" [disabled]='waitingTimer !== 180 || retryAttempt >= 3' (click)='resendOTP()'>Resend OTP</button>
+        </form>
+    </div>
+    <hr>
+</div>

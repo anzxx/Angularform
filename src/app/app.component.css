@@ -1,0 +1,10 @@
+.nav > a {
+    margin: 5px 10px;
+    border-bottom: 1px solid gray ;
+    transition: all .25s ease;
+}
+
+.nav > a:hover {
+    color: white;
+    background-color: rgb(151, 151, 151);
+}
