@@ -1,27 +1,28 @@
-# AngularApp
+##Loan Application form
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.3.
+Created a verification form, at default url '/verify' in angular application.
 
-## Development server
+The form have fields for City, PanNumber Fullname, Email, Mobile and OTP.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Form has verifications as follows-
 
-## Code scaffolding
+City - required
+PanNumber - required and valid PAN format for INDIA and max length of 10.
+Fullname - required and max length of 140.
+email - required and valid Email format and max length of 255.
+Mobile - required and valid mobile format and max length of 10. (Shown with +91 prefix)
+OTP - required and valid NUMBER ONLY format and max length of 4.(OTP field is hidden till getOTP API is successfully called)
+As soon as mobile field is filled by user and is valid, then 'getOTP' API is called.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+If 'getOTP' API is successful, 'Enter OTP' field is enabled and 'Resend OTP' link is disabled.
 
-## Build
+'Resend OTP' link remains disabled for 3 minutes and will get enable when 3 minutes lapse. Now user can click on 'Resend OTP' link again and if API is successfully called, above process is repeated.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+User can click 'Resend OTP' link only 3 times, after that error message "Please try again after an hour" is shown and 'Resend OTP' link gets hidden.
 
-## Running unit tests
+As soon as user fills OTP field and its valid, 'verifyOTP' API is called.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+If 'verifyOTP' API is successful, the message "Thank you for verification xxxx". XXXX is fullname filled by user in form.
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Skilled used-
+Material UI, angular services, RxJS, Routing.
